@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simon Bot - TikTok Auto Poster</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="bg-bubbles"><span></span><span></span><span></span></div>
+<div class="container">
+  <div class="logo">🎬 SIMON<span>BOT</span></div>
+  <h1>Post To TikTok<br><span class="gradient-text">In One Click</span></h1>
+  <p class="subtitle">Beautiful, fast and easy. Connect once, post forever.</p>
+  <div class="cards">
+    <div class="mini-card">⚡<b>Fast Upload</b><p>MP4 in seconds</p></div>
+    <div class="mini-card">🎨<b>Beautiful</b><p>Colourful design</p></div>
+    <div class="mini-card">🔒<b>Secure</b><p>Your keys are safe</p></div>
+  </div>
+  {% if connected %}
+    <a href="/dashboard" class="btn-main">Go To Dashboard →</a>
+    <p class="small">Connected as @{{ user.username or 'TikTok User' }}</p>
+  {% else %}
+    <a href="/login" class="btn-main">✦ Connect TikTok</a>
+    <p class="small">Free • No password needed • Official TikTok API</p>
+  {% endif %}
+</div>
+</body>
+</html>
