@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard - Simon Bot</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="logo small">🎬 SIMON<span>BOT</span></div>
+  <a href="/logout" class="logout">Logout</a>
+</div>
+<div class="container wide">
+  <div class="profile-card">
+    <img src="{{ user.avatar_url or 'https://via.placeholder.com/80' }}" class="avatar">
+    <div><h2>Hello, {{ user.display_name or 'Creator' }} 👋</h2><p>@{{ user.username or 'tiktok_user' }} • Ready to post</p></div>
+    <div class="badge">● Connected</div>
+  </div>
+  <form action="/post" method="POST" enctype="multipart/form-data" class="upload-card">
+    <h3>📤 Upload New Video</h3>
+    <label class="drop-zone" id="dropZone">
+      <span class="big-icon">🎥</span>
+      <b>Tap to choose video</b>
+      <span id="fileName">MP4 only, up to 1GB</span>
+      <input type="file" name="video" id="videoInput" accept="video/mp4,video/*" required hidden>
+      <video id="preview" controls style="display:none; width:100%; border-radius:12px; margin-top:10px;"></video>
+    </label>
+    <label>✍️ Caption</label>
+    <textarea name="caption" id="caption" placeholder="Write a viral caption... #fyp #viral" maxlength="2200" required></textarea>
+    <div class="char-count"><span id="count">0</span>/2200 • <span id="hashtagHint">Add #fyp for reach</span></div>
+    <div class="hashtags">
+      <button type="button" onclick="addTag('#fyp')">#fyp</button>
+      <button type="button" onclick="addTag('#viral')">#viral</button>
+      <button type="button" onclick="addTag('#trending')">#trending</button>
+      <button type="button" onclick="addTag('#simonbot')">#simonbot</button>
+    </div>
+    <label>🔒 Privacy</label>
+    <div class="privacy-row">
+      <label><input type="radio" name="privacy" value="PUBLIC_TO_EVERYONE" checked> 🌍 Public</label>
+      <label><input type="radio" name="privacy" value="MUTUAL_FOLLOWER"> 👥 Friends</label>
+      <label><input type="radio" name="privacy" value="SELF_ONLY"> 🔒 Only Me</label>
+    </div>
+    <button type="submit" class="btn-main full">🚀 Post To TikTok Now</button>
+    <p class="small center">Your video will appear as draft in TikTok app</p>
+  </form>
+</div>
+<script>
+let inp=document.getElementById('videoInput'); let zone=document.getElementById('dropZone');
+zone.onclick=()=>inp.click();
+inp.onchange=()=>{ let f=inp.files[0]; if(f){ document.getElementById('fileName').innerText=f.name+' • '+(f.size/1024/1024).toFixed(1)+' MB'; let v=document.getElementById('preview'); v.src=URL.createObjectURL(f); v.style.display='block'; }};
+let cap=document.getElementById('caption'); cap.oninput=()=>{ document.getElementById('count').innerText=cap.value.length; };
+function addTag(t){ cap.value+= ' '+t; cap.dispatchEvent(new Event('input')); }
+</script>
+</body>
+        </html>
